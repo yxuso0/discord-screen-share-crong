@@ -1,0 +1,268 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crong Archive</title>
+
+  <style>
+    :root {
+      --bg: #f3f5ee;
+      --surface: #fafbf7;
+      --green: #657b62;
+      --deep-green: #263d2d;
+      --muted: #879184;
+      --line: #dce3d7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--deep-green);
+      font-family:
+        Inter, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", "Noto Sans KR", sans-serif;
+    }
+
+    /* 상단 헤더 */
+    .header {
+      padding: 42px 24px 30px;
+      max-width: 920px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 14px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #8ca586;
+      border-radius: 50%;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 6vw, 48px);
+      font-weight: 650;
+      letter-spacing: -0.055em;
+    }
+
+    .subtitle {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .header-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 26px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    .count {
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    /* 이미지 목록 */
+    .gallery {
+      width: min(100% - 32px, 872px);
+      margin: 0 auto;
+      padding-bottom: 52px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .image-card {
+      overflow: hidden;
+      padding: 7px;
+      background: var(--surface);
+      border: 1px solid rgba(101, 123, 98, 0.12);
+      border-radius: 15px;
+      box-shadow: 0 4px 18px rgba(38, 61, 45, 0.035);
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .image-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 9px;
+      cursor: zoom-in;
+      transition: filter 0.25s ease;
+    }
+
+    .image-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(38, 61, 45, 0.09);
+    }
+
+    .image-card:hover img {
+      filter: saturate(1.04);
+    }
+
+    /* 전체 화면 이미지 */
+    .image-card img.fullscreen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      max-width: none;
+      max-height: none;
+      object-fit: contain;
+      border-radius: 0;
+      background: #18231b;
+      cursor: zoom-out;
+    }
+
+    body:has(img.fullscreen) {
+      overflow: hidden;
+    }
+
+    /* 하단 */
+    .footer {
+      padding: 24px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+    }
+
+    @media (max-width: 600px) {
+      .header {
+        padding: 32px 20px 24px;
+      }
+
+      .gallery {
+        width: calc(100% - 24px);
+        gap: 12px;
+      }
+
+      .image-card {
+        padding: 5px;
+        border-radius: 11px;
+      }
+
+      .image-card img {
+        border-radius: 7px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <div class="eyebrow">PERSONAL COLLECTION</div>
+    <h1>Crong Archive.</h1>
+    <p class="subtitle">
+      A little collection of everyday moments.<br>
+      크롱의 작은 순간들을 모아둔 공간
+    </p>
+
+    <div class="header-bottom">
+      <span>VISUAL DIARY</span>
+      <span class="count">12 IMAGES</span>
+    </div>
+  </header>
+
+  <main class="gallery" id="gallery">
+    <div class="image-card">
+      <img src="crong/Crong_vsc.png" alt="Crong VSC">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_discordCall.png" alt="Crong Discord Call">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_computer_Youtube.png" alt="Crong Computer YouTube">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_photoshop.jpg" alt="Crong Photoshop">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_tears.jpg" alt="Crong Tears">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_meal2.png" alt="Crong Meal 2">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_music.png" alt="Crong Music">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_computer.png" alt="Crong Computer">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_sleep.png" alt="Crong Sleep">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_meal.png" alt="Crong Meal">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_happytime.png" alt="Crong Happy Time">
+    </div>
+    <div class="image-card">
+      <img src="crong/Crong_racket.png" alt="Crong Racket">
+    </div>
+  </main>
+
+  <footer class="footer">
+    MADE WITH CARE · CRONG ARCHIVE
+  </footer>
+
+  <script>
+    const images = document.querySelectorAll(".image-card img");
+
+    images.forEach((img) => {
+      img.addEventListener("click", () => {
+        img.classList.toggle("fullscreen");
+      });
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        document.querySelector(".fullscreen")
+          ?.classList.remove("fullscreen");
+      }
+    });
+  </script>
+</body>
+</html>
