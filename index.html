@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f5ee">
   <title>Crong Archive</title>
 
   <style>
@@ -33,11 +34,15 @@
         "Segoe UI", "Noto Sans KR", sans-serif;
     }
 
-    /* 상단 헤더 */
+    body.viewer-open {
+      overflow: hidden;
+    }
+
+    /* 헤더 */
     .header {
-      padding: 42px 24px 30px;
       max-width: 920px;
       margin: 0 auto;
+      padding: 42px 24px 30px;
     }
 
     .eyebrow {
@@ -55,6 +60,7 @@
       content: "";
       width: 7px;
       height: 7px;
+      flex-shrink: 0;
       background: #8ca586;
       border-radius: 50%;
     }
@@ -75,8 +81,8 @@
 
     .header-bottom {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 12px;
       margin-top: 26px;
       padding-top: 16px;
@@ -91,14 +97,14 @@
       font-weight: 700;
     }
 
-    /* 이미지 목록 */
+    /* 세로 이미지 목록 */
     .gallery {
-      width: min(100% - 32px, 872px);
-      margin: 0 auto;
-      padding-bottom: 52px;
       display: flex;
       flex-direction: column;
       gap: 18px;
+      width: min(872px, calc(100% - 32px));
+      margin: 0 auto;
+      padding-bottom: 52px;
     }
 
     .image-card {
@@ -131,36 +137,63 @@
       filter: saturate(1.04);
     }
 
-    /* 전체 화면 이미지 */
-    .image-card img.fullscreen {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      width: 100vw;
-      height: 100vh;
-      height: 100dvh;
-      max-width: none;
-      max-height: none;
-      object-fit: contain;
-      border-radius: 0;
-      background: #18231b;
-      cursor: zoom-out;
-    }
-
-    body:has(img.fullscreen) {
-      overflow: hidden;
-    }
-
     /* 하단 */
     .footer {
       padding: 24px;
-      text-align: center;
       border-top: 1px solid var(--line);
       color: var(--muted);
+      text-align: center;
       font-size: 10px;
       letter-spacing: 0.16em;
     }
 
+    /* 전체 화면 뷰어: 원본 이미지 레이아웃과 분리 */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      padding: 0;
+      margin: 0;
+      background: #18231b;
+
+      visibility: hidden;
+      opacity: 0;
+      pointer-events: none;
+
+      transition:
+        opacity 0.16s ease,
+        visibility 0.16s ease;
+    }
+
+    .viewer.active {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .viewer img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      object-fit: contain;
+      cursor: zoom-out;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    /* 모바일 */
     @media (max-width: 600px) {
       .header {
         padding: 32px 20px 24px;
@@ -181,19 +214,28 @@
       }
     }
 
+    /* 모션 최소화 설정 */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        scroll-behavior: auto !important;
-        transition: none !important;
+      html {
+        scroll-behavior: auto;
+      }
+
+      .image-card,
+      .image-card img,
+      .viewer {
+        transition: none;
       }
     }
   </style>
 </head>
 
 <body>
+
   <header class="header">
     <div class="eyebrow">PERSONAL COLLECTION</div>
+
     <h1>Crong Archive.</h1>
+
     <p class="subtitle">
       A little collection of everyday moments.<br>
       크롱의 작은 순간들을 모아둔 공간
@@ -206,63 +248,139 @@
   </header>
 
   <main class="gallery" id="gallery">
+
     <div class="image-card">
-      <img src="crong/Crong_vsc.png" alt="Crong VSC">
+      <img src="crong/Crong_vsc.png" alt="Crong VSC" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_discordCall.png" alt="Crong Discord Call">
+      <img src="crong/Crong_discordCall.png" alt="Crong Discord Call" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_computer_Youtube.png" alt="Crong Computer YouTube">
+      <img src="crong/Crong_computer_Youtube.png" alt="Crong Computer YouTube" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_photoshop.jpg" alt="Crong Photoshop">
+      <img src="crong/Crong_photoshop.jpg" alt="Crong Photoshop" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_tears.jpg" alt="Crong Tears">
+      <img src="crong/Crong_tears.jpg" alt="Crong Tears" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_meal2.png" alt="Crong Meal 2">
+      <img src="crong/Crong_meal2.png" alt="Crong Meal 2" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_music.png" alt="Crong Music">
+      <img src="crong/Crong_music.png" alt="Crong Music" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_computer.png" alt="Crong Computer">
+      <img src="crong/Crong_computer.png" alt="Crong Computer" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_sleep.png" alt="Crong Sleep">
+      <img src="crong/Crong_sleep.png" alt="Crong Sleep" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_meal.png" alt="Crong Meal">
+      <img src="crong/Crong_meal.png" alt="Crong Meal" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_happytime.png" alt="Crong Happy Time">
+      <img src="crong/Crong_happytime.png" alt="Crong Happy Time" loading="lazy">
     </div>
+
     <div class="image-card">
-      <img src="crong/Crong_racket.png" alt="Crong Racket">
+      <img src="crong/Crong_racket.png" alt="Crong Racket" loading="lazy">
     </div>
+
   </main>
 
   <footer class="footer">
     MADE WITH CARE · CRONG ARCHIVE
   </footer>
 
+  <!-- 전체 화면 이미지 레이어 -->
+  <div
+    class="viewer"
+    id="viewer"
+    aria-hidden="true"
+    role="dialog"
+    aria-label="이미지 전체 화면 보기"
+  >
+    <img id="viewerImage" src="" alt="">
+  </div>
+
   <script>
     const images = document.querySelectorAll(".image-card img");
+    const viewer = document.getElementById("viewer");
+    const viewerImage = document.getElementById("viewerImage");
+
+    let isViewerOpen = false;
+    let previousFocusedElement = null;
+
+    function openViewer(img) {
+      if (isViewerOpen) return;
+
+      isViewerOpen = true;
+      previousFocusedElement = document.activeElement;
+
+      // 기존 목록 이미지는 변경하지 않고 뷰어만 갱신
+      viewerImage.src = img.currentSrc || img.src;
+      viewerImage.alt = img.alt;
+
+      document.body.classList.add("viewer-open");
+      viewer.classList.add("active");
+      viewer.setAttribute("aria-hidden", "false");
+    }
+
+    function closeViewer() {
+      if (!isViewerOpen) return;
+
+      isViewerOpen = false;
+
+      viewer.classList.remove("active");
+      viewer.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("viewer-open");
+
+      // 닫는 애니메이션 중 이미지가 갑자기 사라지지 않도록
+      // 다음에 열 때 새 이미지로 교체
+      if (previousFocusedElement &&
+          typeof previousFocusedElement.focus === "function") {
+        previousFocusedElement.focus({ preventScroll: true });
+      }
+    }
 
     images.forEach((img) => {
       img.addEventListener("click", () => {
-        img.classList.toggle("fullscreen");
+        openViewer(img);
       });
     });
 
+    // 확대 화면을 클릭하면 닫기
+    viewer.addEventListener("click", (event) => {
+      if (event.target === viewer || event.target === viewerImage) {
+        closeViewer();
+      }
+    });
+
+    // ESC 키로 닫기
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        document.querySelector(".fullscreen")
-          ?.classList.remove("fullscreen");
+      if (event.key === "Escape" && isViewerOpen) {
+        closeViewer();
+      }
+    });
+
+    // 브라우저 뒤로 가기나 페이지 이탈 시에도 스크롤 잠금 방지
+    window.addEventListener("pageshow", () => {
+      if (!isViewerOpen) {
+        document.body.classList.remove("viewer-open");
       }
     });
   </script>
+
 </body>
 </html>
